@@ -62,13 +62,36 @@ The Dirty Cafe Sales dataset contains 10,000 rows of synthetic data representing
 
 ## 🎯 Goals of This Practice
 
-- [ ] Standardize column names (lowercase, underscores instead of spaces)
-- [ ] Replace placeholder error strings (`ERROR`, `UNKNOWN`) with proper `NaN` values
-- [ ] Convert numeric columns from string/object dtype to appropriate numeric dtypes
-- [ ] Handle missing values appropriately (drop, fill, or flag depending on context)
-- [ ] Parse and standardize date columns
-- [ ] Perform basic EDA — distributions, value counts, and summary statistics
-- [ ] Document findings and cleaning decisions clearly
+- [x] Standardize column names (lowercase, underscores instead of spaces)
+- [x] Replace placeholder error strings (`ERROR`, `UNKNOWN`) with proper `NaN` values
+- [x] Convert numeric columns from string/object dtype to appropriate numeric dtypes
+- [x] Handle missing values appropriately (drop, fill, or flag depending on context)
+- [x] Parse and standardize date columns
+- [x] Perform basic EDA — distributions, value counts, and summary statistics
+- [x] Document findings and cleaning decisions clearly
+
+## 🧹 Cleaning & Analysis Walkthrough
+
+All data cleaning and analysis steps are documented in the Jupyter notebook [eda.ipynb](file:///c:/Users/user/OneDrive/Desktop/EDA-Practice/sales_data_cleaning/notebooks/eda.ipynb).
+
+### 1. Data Exploration & Info
+Using the helper function [print_basic_info](file:///c:/Users/user/OneDrive/Desktop/EDA-Practice/sales_data_cleaning/notebooks/eda.ipynb#L303-L314), we investigated the dataset structure:
+- **Initial types**: All columns were read as `object` (string) due to dirty formatting/placeholders.
+- **Missing values**: Identified significant missing data across columns (e.g. `location` had 3,265 missing values, `payment_method` had 2,579 missing values).
+
+### 2. Data Cleaning & Normalization
+Implemented in the function [normalize_data](file:///c:/Users/user/OneDrive/Desktop/EDA-Practice/sales_data_cleaning/notebooks/eda.ipynb#L438-L481):
+- **Column Standardization**: Cleaned whitespaces, converted column titles to lowercase, and replaced spaces with underscores (`_`).
+- **Text Standardization**: Standardized string fields (`item`, `payment_method`, `location`) to lowercase.
+- **Dtype Correction**: Converted `price_per_unit`, `quantity`, and `total_spent` to float64, and `transaction_date` to datetime, turning errors like `ERROR` and `UNKNOWN` into `NaN`.
+- **Handling Missing Values**: Imputed missing numeric fields (`price_per_unit`, `quantity`, `total_spent`) with their respective column mean.
+
+### 3. Key Findings & Insights
+Implemented in the function [perform_groupby_operations](file:///c:/Users/user/OneDrive/Desktop/EDA-Practice/sales_data_cleaning/notebooks/eda.ipynb#L542-L566):
+- **Top Product by Revenue**: **Salad** generated the highest total revenue ($17,069.07 total revenue, mean spend per transaction is ~$14.87).
+- **Most Popular Payment Method**: **Digital Wallet** (2,291 transactions).
+- **Top Dining Choice**: **Takeaway** (3,022 transactions) compared to In-store.
+- **Messy Item Placeholders**: The `item` column itself contained placeholder strings `"error"` (292 times) and `"unknown"` (344 times).
 
 ## 📝 Notes
 
